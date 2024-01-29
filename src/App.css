@@ -14,6 +14,10 @@
 }
 .incrementButton {
   margin-left: 10px;
+  ;
+}
+.decrementButton {
+  margin-left: 10px;
 }
 .CountryName {
   font-size: larger;

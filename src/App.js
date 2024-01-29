@@ -22,7 +22,15 @@ class App extends Component {
       return country
     });
     this.setState({countries: updatedCountries});
-
+  }
+  DecrementGold = (countryId) => {
+    const updatedCountries = this.state.countries.map((country) => {
+      if (country.id === countryId) {
+        return { ...country, gold: country.gold - 1 };
+      }
+      return country
+    });
+    this.setState({countries: updatedCountries})
   }
   render() { 
     return ( 
@@ -32,6 +40,7 @@ class App extends Component {
         key={ country.id}
         id={ country.id }
         onIncremnt={ this.IncrementGold}
+        onDecremnt={ this.DecrementGold}
         name={country.name}
         gold={ country.gold}
          />)}
