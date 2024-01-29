@@ -15,8 +15,14 @@ class App extends Component {
     ]    
   }
   IncrementGold = (countryId) => {
-    
-    console.log(`IncrementGold: ${countryId}` );
+    const updatedCountries = this.state.countries.map((country) => {
+      if (country.id === countryId) {
+        return { ...country, gold: country.gold + 1 };
+      }
+      return country
+    });
+    this.setState({countries: updatedCountries});
+
   }
   render() { 
     return ( 

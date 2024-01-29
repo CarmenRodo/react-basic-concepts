@@ -5,17 +5,12 @@ class Country extends Component {
         name: this.props.name,
         gold: this.props.gold,
     }
-    handleIncrement = () => {
-        this.setState(
-            {gold: this.state.gold + 1}
-        );
-    }
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div>
-                <div className="CountryName" > {this.state.name}</div>
-                <div>Gold Medals: {this.state.gold} 
+                <div className="CountryName" > {this.props.name}</div>
+                <div>Gold Medals: {this.props.gold} 
                 <button variant="contained" className="incrementButton" onClick={ () => this.props.onIncremnt(this.props.id)}> + </button>
                 </div>
             </div>
