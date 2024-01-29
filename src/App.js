@@ -15,13 +15,13 @@ class App extends Component {
     ]    
   }
   IncrementGold = (countryId) => {
-    const updatedCountries = this.state.countries.map((country) => {
-      if (country.id === countryId) {
-        return { ...country, gold: country.gold + 1 };
-      }
-      return country
-    });
-    this.setState({countries: updatedCountries});
+    const countriesMutable = [...this.state.countries];
+
+    const idx = countriesMutable.findIndex((c) => c.id === countryId);
+
+    countriesMutable[idx].gold += 1;
+
+    this.setState({ countries:countriesMutable });
   }
   DecrementGold = (countryId) => {
     const updatedCountries = this.state.countries.map((country) => {
@@ -32,7 +32,7 @@ class App extends Component {
     });
     this.setState({countries: updatedCountries})
   }
-  render() { 
+  render() {
     return ( 
       <div className="App">
         { this.state.countries.map( country => 
