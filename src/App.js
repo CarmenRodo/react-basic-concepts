@@ -1,76 +1,83 @@
-// Repository:  medals-b-react
-// Author:      Jeff Grissom
-// Version:     5.xx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { Component } from 'react';
 import Country from './components/Country';
 import NewCountry from './components/NewCountry';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
+import Badge from 'react-bootstrap/Badge';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import './App.css';
 
-const App = () => {
-  const [ countries, setCountries ] = useState([]);
-  const medals = useRef([
-    { id: 1, name: 'gold' },
-    { id: 2, name: 'silver' },
-    { id: 3, name: 'bronze' },
-  ]);
-
-  // this is the functional equivalent to componentDidMount
-  useEffect(() => {
-    // initial data loaded here
-    let fetchedCountries = [
+class App extends Component {
+  state = {
+    countries: [
       { id: 1, name: 'United States', gold: 2, silver: 2, bronze: 3 },
       { id: 2, name: 'China', gold: 3, silver: 1, bronze: 0 },
       { id: 3, name: 'Germany', gold: 0, silver: 2, bronze: 2 },
+    ],
+    medals: [
+      { id: 1, name: 'gold' },
+      { id: 2, name: 'silver' },
+      { id: 3, name: 'bronze' },
     ]
-    setCountries(fetchedCountries);
-  }, []);
-
-  const handleAdd = (name) => {
+  }
+  handleAdd = (name) => {
+    const { countries } = this.state;
     const id = countries.length === 0 ? 1 : Math.max(...countries.map(country => country.id)) + 1;
-    setCountries([...countries].concat({ id: id, name: name, gold: 0, silver: 0, bronze: 0 }));
+    const mutableCountries = [...countries].concat({ id: id, name: name, gold: 0, silver: 0, bronze: 0 });
+    this.setState({ countries: mutableCountries });
   }
-  const handleDelete = (countryId) => {
-    setCountries([...countries].filter(c => c.id !== countryId));
+  handleDelete = (countryId) => {
+    const { countries } = this.state;
+    const mutableCountries = [...countries].filter(c => c.id !== countryId);
+    this.setState({ countries: mutableCountries });
   }
-  const handleIncrement = (countryId, medalName) => {
+  handleIncrement = (countryId, medalName) => {
+    const countries = [ ...this.state.countries ];
     const idx = countries.findIndex(c => c.id === countryId);
-    const mutableCountries = [...countries ];
-    mutableCountries[idx][medalName] += 1;
-    setCountries(mutableCountries);
+    countries[idx][medalName] += 1;
+    this.setState({ countries: countries });
   }
-  const handleDecrement = (countryId, medalName) => {
+  handleDecrement = (countryId, medalName) => {
+    const countries = [ ...this.state.countries ];
     const idx = countries.findIndex(c => c.id === countryId);
-    const mutableCountries = [...countries ];
-    mutableCountries[idx][medalName] -= 1;
-    setCountries(mutableCountries);
+    countries[idx][medalName] -= 1;
+    this.setState({ countries: countries });
   }
-  const getAllMedalsTotal = () => {
+  getAllMedalsTotal() {
     let sum = 0;
-    medals.current.forEach(medal => { sum += countries.reduce((a, b) => a + b[medal.name], 0); });
+    this.state.medals.forEach(medal => { sum += this.state.countries.reduce((a, b) => a + b[medal.name], 0); });
     return sum;
   }
-  return (
-    <React.Fragment>
-      <div className='appHeading'>
-        Olympic Medals
-        <span className='badge'>
-          { getAllMedalsTotal() }
-        </span>
-      </div>
-      <div className='countries'>
-          { countries.map(country => 
-            <Country 
-              key={ country.id } 
+  render() { 
+    return (
+      <React.Fragment>
+      <Navbar className="navbar-dark bg-dark">
+          <Container fluid>
+            <Navbar.Brand>
+              Olympic Medals
+              <Badge className="ml-2" bg="light" text="dark" pill>{ this.getAllMedalsTotal() }</Badge>
+            </Navbar.Brand>
+            <NewCountry onAdd={ this.handleAdd } />
+          </Container>
+      </Navbar>
+      <Container fluid>
+      <Row>
+        { this.state.countries.map(country => 
+          <Col className="mt-3" key={ country.id }>
+            <Country  
               country={ country } 
-              medals={ medals.current }
-              onDelete={ handleDelete }
-              onIncrement={ handleIncrement } 
-              onDecrement={ handleDecrement } />
-          )}
-      </div>
-      <NewCountry onAdd={ handleAdd } />
-    </React.Fragment>
-  );
+              medals={ this.state.medals }
+              onDelete={ this.handleDelete }
+              onIncrement={ this.handleIncrement } 
+              onDecrement={ this.handleDecrement } />
+          </Col>
+        )}
+        </Row>
+      </Container>
+      </React.Fragment>
+    );
+  }
 }
  
 export default App;
