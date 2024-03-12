@@ -4,11 +4,13 @@
   "homepage": "http://CarmenRodo.github.io/react-basic-concepts",
   "private": true,
   "dependencies": {
+    "@microsoft/signalr": "^7.0.11",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "axios": "^1.6.7",
+    "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
+    "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.8.0",
     "react-bootstrap-icons": "^1.10.3",
@@ -17,8 +19,6 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -41,8 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^6.1.1"
   }
 }
