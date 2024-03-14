@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
@@ -25,9 +24,9 @@ const NewCountry = (props) => {
 
   return (
     <React.Fragment>
-      <Nav.Link className="btn" href="#" onClick={ handleModalShow }>
+      <Button variant="outline-success" onClick={ handleModalShow }>
         <PlusCircleFill />
-      </Nav.Link>
+      </Button>
       <Modal onKeyPress={ handleModalKeyPress } show={ showModal } onHide={ handleModalClose }>
         <Modal.Header closeButton>
           <Modal.Title>New Country</Modal.Title>
